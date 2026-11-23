@@ -48,4 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //passes the request and response to the next filter or to the application
         chain.doFilter(request, response);
     }
+
+    //As i have told to Elisa also this isnt the standart way check oauth2Server but for Elisa i let it be cause you didnt have time
+    //but here you need to do it with oauth2Server  i will paste you a document you can read it out and learn the security flow
 }

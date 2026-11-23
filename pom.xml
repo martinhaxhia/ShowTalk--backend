@@ -138,3 +138,20 @@
 		</plugins>
 	</build>
 </project>
+
+<!--
+> The build fails cause lombok is dependecy but isnt w wired into the Maven annotation processing pipeline.
+ When Lombok is marked `<optional>true</optional>`, the compiler doesn't
+automatically run its annotation processor, so `@Getter`, `@Setter`, and other annotations were being ignored — causing 29 compilation errors
+(missing methods like `getUsername()`, `getEmail()`, etc.).
+>
+> **Fix**
+> 1. Added `maven-compiler-plugin` with Lombok in `<annotationProcessorPaths>` to enable annotation processing at compile time.
+> 2. Configured `spring-boot-maven-plugin` to exclude Lombok from the repackaged JAR (since it's only needed at compile time).
+>
+> **For future reference:** Whenever you add Lombok (or any annotation processor) as an optional dependency,
+always configure the `maven-compiler-plugin` to include it in `<annotationProcessorPaths>`.
+
+
+For the future make sure code builds and runs succesfully before pushing or opening PR
+-->

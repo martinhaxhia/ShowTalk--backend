@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor  //you can use annotation @Data includes both getters and setters
 public class AppUser {
 
     @Id
@@ -19,7 +19,7 @@ public class AppUser {
     private Long id;
     private String username;
     private String email;
-    private String password_hash;
+    private String password_hash;   //no need for hash just password
 
     @Enumerated(EnumType.STRING)
     private Role role;

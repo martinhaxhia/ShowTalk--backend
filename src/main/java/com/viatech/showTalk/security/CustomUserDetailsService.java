@@ -27,6 +27,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .withUsername(user.getUsername())
                 .password(user.getPassword_hash())
                 .roles(user.getRole().name())
-                .build();
+                .build(); // there is no need for this you can implement UserDetails interface in the AppUser table and implement the methods
     }
 }
