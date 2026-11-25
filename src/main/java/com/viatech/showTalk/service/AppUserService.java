@@ -48,13 +48,13 @@ public class AppUserService {
             throw new DuplicateUserException("Email already registered");
         }
 
-        AppUser userEntity = new AppUser();
-        userEntity.setUsername(request.username());
-        userEntity.setEmail(request.email());
-        userEntity.setPassword(passwordEncoder.encode(request.password()));
-        userEntity.setRole(Role.USER);
+        AppUser appUser = new AppUser();
+        appUser.setUsername( request.username() );
+        appUser.setEmail( request.email() );
+        appUser.setPassword(passwordEncoder.encode(request.password()));
+        appUser.setRole(Role.USER);
 
-        AppUser savedUser = appUserRepository.save(userEntity);
+        AppUser savedUser = appUserRepository.save(appUser);
 
         return new AppUserResponse(
                 savedUser.getId(),
