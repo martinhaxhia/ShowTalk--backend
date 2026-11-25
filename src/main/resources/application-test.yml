@@ -1,0 +1,9 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+app:
+  security:
+    jwt:
+      key-dir: ./target/test-jwt-keys
+      generate-if-missing: true
