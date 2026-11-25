@@ -3,6 +3,8 @@ package com.viatech.showTalk.controller;
 
 import com.viatech.showTalk.DTO.AppUserRegisterRequest;
 import com.viatech.showTalk.DTO.AppUserResponse;
+import com.viatech.showTalk.DTO.LoginRequest;
+import com.viatech.showTalk.DTO.LoginResponse;
 import com.viatech.showTalk.service.AppUserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,11 +26,14 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AppUserResponse> register(@Valid @RequestBody AppUserRegisterRequest userRegisterRequest) {
-        return new ResponseEntity<>(appUserService.registerUser(userRegisterRequest), HttpStatus.CREATED);
+        AppUserResponse response = appUserService.registerUser(userRegisterRequest);
+        return  ResponseEntity.ok(response);
     }
 
-    @PostMapping("/register-moderator")
-    public ResponseEntity<AppUserResponse> registerModerator(@Valid @RequestBody AppUserRegisterRequest userRegisterRequest) {
-        return new ResponseEntity<>(appUserService.registerModerator(userRegisterRequest), HttpStatus.CREATED);
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = appUserService.login(request);
+        return ResponseEntity.ok(response);
     }
 }

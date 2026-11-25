@@ -5,3 +5,9 @@ spring:
     url: jdbc:postgresql://127.0.0.1:5432/showtalk
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
+
+app:
+  security:
+    jwt:
+      key-dir: ./.local-keys
+      generate-if-missing: true

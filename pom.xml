@@ -79,6 +79,8 @@
 			<scope>runtime</scope>
 		</dependency>
 
+
+
 		<!-- Kafka and WebSocket -->
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
@@ -98,7 +100,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+
 		</dependency>
 
 		<!-- Tests -->
@@ -122,6 +124,13 @@
 			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>postgresql</artifactId>
@@ -132,26 +141,40 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>1.6.3</version>
+						</path>
+					</annotationProcessorPaths>
+
+				</configuration>
+
+
+			</plugin>
+
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 </project>
-
-<!--
-> The build fails cause lombok is dependecy but isnt w wired into the Maven annotation processing pipeline.
- When Lombok is marked `<optional>true</optional>`, the compiler doesn't
-automatically run its annotation processor, so `@Getter`, `@Setter`, and other annotations were being ignored — causing 29 compilation errors
-(missing methods like `getUsername()`, `getEmail()`, etc.).
->
-> **Fix**
-> 1. Added `maven-compiler-plugin` with Lombok in `<annotationProcessorPaths>` to enable annotation processing at compile time.
-> 2. Configured `spring-boot-maven-plugin` to exclude Lombok from the repackaged JAR (since it's only needed at compile time).
->
-> **For future reference:** Whenever you add Lombok (or any annotation processor) as an optional dependency,
-always configure the `maven-compiler-plugin` to include it in `<annotationProcessorPaths>`.
-
-
-For the future make sure code builds and runs succesfully before pushing or opening PR
--->
