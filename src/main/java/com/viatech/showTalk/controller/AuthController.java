@@ -30,6 +30,8 @@ public class AuthController {
         return  ResponseEntity.ok(response);
     }
 
+    //Change name of request and response also to RegisterRequest and RegisterResponse
+
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {

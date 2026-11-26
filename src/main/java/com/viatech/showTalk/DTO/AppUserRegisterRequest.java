@@ -9,4 +9,4 @@ public record AppUserRegisterRequest(
         @NotBlank(message = "Email cannot be empty")
         @Email(message = "Email must be valid") String email,
         @NotBlank @Size(min = 8, max = 50) String password
-) {}
+) {}//Every DTO needs id

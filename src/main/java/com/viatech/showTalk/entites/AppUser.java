@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppUser implements UserDetails {
-
+        //Rename the App User to just User
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
