@@ -7,6 +7,7 @@ import com.viatech.showTalk.DTO.LoginRequest;
 import com.viatech.showTalk.DTO.LoginResponse;
 import com.viatech.showTalk.entites.AppUser;
 import com.viatech.showTalk.exceptions.DuplicateUserException;
+import com.viatech.showTalk.exceptions.UserNotFoundException;
 import com.viatech.showTalk.repositories.AppUserRepository;
 import com.viatech.showTalk.utils.mapper.AppUserMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,27 +42,32 @@ public class AppUserService {
     }
 
     @Transactional
-    public AppUserResponse registerUser(AppUserRegisterRequest request) {
+    public LoginResponse registerUser(AppUserRegisterRequest request) {
 
 
         if (appUserRepository.findByEmail(request.email()).isPresent()) {
             throw new DuplicateUserException("Email already registered");
         }
 
+        if(appUserRepository.findByUsername(request.username()).isPresent()) {
+            throw new DuplicateUserException("Username already registered");
+        }
+
+
+
+
         AppUser appUser = new AppUser();
         appUser.setUsername( request.username() );
         appUser.setEmail( request.email() );
         appUser.setPassword(passwordEncoder.encode(request.password()));
         appUser.setRole(Role.USER);
-
         AppUser savedUser = appUserRepository.save(appUser);
+        String accessToken = jwtUtil.generateToken(savedUser);
 
-        return new AppUserResponse(
-                savedUser.getId(),
-                savedUser.getUsername(),
-                savedUser.getEmail(),
-                savedUser.getRole().name()
-        );
+        AppUserResponse userResponse = appUserMapper.userToResponse(savedUser);
+
+        return new LoginResponse(accessToken, userResponse);
+
 
 
     }
@@ -85,15 +91,18 @@ public class AppUserService {
     }
 
 
+    public AppUserResponse getCurrentUser(Long userId){
+
+        return appUserMapper.userToResponse(
+                appUserRepository.findById(userId)
+                        .orElseThrow(() -> new UserNotFoundException("User not found"))
+        );
+    }
 
 
 
 
 
-
-
-    //I will learn you this when we are at the office cause this is the way its best to be done
-    //its okay for now but we will change it
 
 }
 
