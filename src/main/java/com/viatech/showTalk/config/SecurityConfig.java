@@ -81,12 +81,8 @@ public class SecurityConfig {
                 //are accessed  without authentication
                         .requestMatchers(
                                 "/api/auth/login",
-                                "/api/auth/register",
+                                "/api/auth/register"
 
-                                "/swagger-ui.html",
-                                "/swagger-ui/**",
-                                "/v3/api-docs",
-                                "/v3/api-docs/**"
                         ).permitAll()
                                 //are accessed only if authenticated
                         .anyRequest().authenticated()
