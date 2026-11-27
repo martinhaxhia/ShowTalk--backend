@@ -1,6 +1,6 @@
 package com.viatech.showTalk.DTO;
 
-public record AppUserResponse(
+public record RegisterResponse(
         Long id,
         String username,
         String email,

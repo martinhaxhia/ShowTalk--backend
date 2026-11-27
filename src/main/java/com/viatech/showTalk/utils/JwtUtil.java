@@ -1,6 +1,6 @@
 package com.viatech.showTalk.utils;
 
-import com.viatech.showTalk.entites.AppUser;
+import com.viatech.showTalk.entites.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -23,7 +23,7 @@ public class JwtUtil {
         this.encoder = encoder;
     }
 
-    public String generateToken(AppUser user) {
+    public String generateToken(User user) {
         Instant now = Instant.now();
 
         String scope = user.getAuthorities().stream()

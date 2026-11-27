@@ -1,13 +1,12 @@
 package com.viatech.showTalk.controller;
 
 
-import com.viatech.showTalk.DTO.AppUserRegisterRequest;
-import com.viatech.showTalk.DTO.AppUserResponse;
+import com.viatech.showTalk.DTO.RegisterRequest;
+import com.viatech.showTalk.DTO.RegisterResponse;
 import com.viatech.showTalk.DTO.LoginRequest;
 import com.viatech.showTalk.DTO.LoginResponse;
-import com.viatech.showTalk.service.AppUserService;
+import com.viatech.showTalk.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,15 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AppUserService appUserService;
+    private final UserService appUserService;
 
-    public AuthController(AppUserService appUserService) {
+    public AuthController(UserService appUserService) {
         this.appUserService = appUserService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AppUserResponse> register(@Valid @RequestBody AppUserRegisterRequest userRegisterRequest) {
-        AppUserResponse response = appUserService.registerUser(userRegisterRequest);
+    public ResponseEntity<LoginResponse> register(@Valid @RequestBody RegisterRequest request) {
+        LoginResponse response = appUserService.registerUser(request);
         return  ResponseEntity.ok(response);
     }
 

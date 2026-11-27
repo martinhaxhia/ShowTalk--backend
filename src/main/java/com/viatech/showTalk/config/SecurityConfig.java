@@ -6,7 +6,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import com.viatech.showTalk.repositories.AppUserRepository;
+import com.viatech.showTalk.repositories.UserRepository;
 import com.viatech.showTalk.utils.Jwks;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +44,7 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final AppUserRepository appUserRepository;
+    private final UserRepository appUserRepository;
 
     @Value("${app.security.jwt.key-dir}")
     private String keyDir;
